@@ -62,6 +62,14 @@ namespace ExcelDocumentationFromClassObject
                     }
                 }
                 dtDocument.Rows.Add(name, type.FullName);
+
+                //If you want to divide writing into an excel then uncomment the below code 
+                //if (dtDocument.Rows.Count == 930) 
+                //{ 
+                //    ExportToExcel(dtDocument, $"ResCreation.xlsx", "CreateReservationRequest", true); 
+                //    dtDocument.Clear(); 
+                //} 
+                //} 
             }
             return dtDocument;
         }
