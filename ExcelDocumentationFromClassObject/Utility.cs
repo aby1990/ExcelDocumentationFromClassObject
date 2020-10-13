@@ -13,7 +13,6 @@ namespace ExcelDocumentationFromClassObject
         private bool isInitital = true;
 
         public DataTable GetNameAndType<T>(T test, string name1 = "")
-
         {
             if (isInitital)
             {
@@ -26,7 +25,7 @@ namespace ExcelDocumentationFromClassObject
             {
                 string name = name1 + descriptor.Name;
                 var type = descriptor.PropertyType;
-                if (type.Name.ToLower().Contains("collection"))
+                if (type.Name.ToLower().Contains("collection") && IsNeeded(descriptor.Name))
                 {
                     try
                     {
@@ -49,7 +48,7 @@ namespace ExcelDocumentationFromClassObject
 
 
                 else if (!type.Module.Name.ToLower().Contains("corelib") && !type.Module.Name.ToLower().Contains("corlib")
-                    && !type.Module.Name.ToLower().Contains("enum"))
+                    && !type.Module.Name.ToLower().Contains("enum") && IsNeeded(descriptor.Name))
                 {
                     try
                     {
@@ -64,6 +63,17 @@ namespace ExcelDocumentationFromClassObject
                 dtDocument.Rows.Add(name, type.FullName);
             }
             return dtDocument;
+        }
+
+        //To cut down size of excel, only chosen which are commonly used in any class, for 
+        // small classes just return true to get complete object list 
+        public bool IsNeeded(string str)
+        {
+            List<string> lst = new List<string>()
+            {  
+                "randomclass"
+            };
+            return true;// lst.Contains(str.ToLower()); 
         }
     }
 }
